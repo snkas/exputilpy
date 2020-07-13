@@ -18,7 +18,7 @@ from distutils.core import setup
 
 setup(
     name='exputil',
-    version='1.3',
+    version='1.4',
     description="Experiment utilities",
     license="Apache 2.0",
     python_requires='>=3.7',

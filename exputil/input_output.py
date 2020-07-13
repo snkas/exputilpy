@@ -130,3 +130,66 @@ def parse_positive_int_less_than(str_value, less_than_int_value):
         raise ValueError("Integer value %d is greater than or equal to threshold %d" % (res, less_than_int_value))
     else:
         return res
+
+
+def read_csv_direct_in_columns(csv_filename, line_values_format):
+    """
+    Directly read in the entire CSV file.
+
+    :param csv_filename:           CSV filename
+    :param line_values_format:     Line format as such: "[int,idx_int,pos_int,float,pos_float,string]+",
+                                   e.g., "idx_int,pos_int,float,string,int,pos_float"
+
+    :return: Array of data column arrays (e.g., [ array[idx_int], array[pos_int], array[float],
+             array[string], array[int], array[pos_float] ]
+    """
+
+    # Determine the formats
+    formats = []
+    for f in line_values_format.split(","):
+        if f != "int" and f != "idx_int" and f != "pos_int" and f != "float" and f != "pos_float" and f != "string":
+            raise ValueError(
+                "Value format must be one of: int, idx_int, pos_int, float, pos_float, string"
+                " (separated by comma without whitespace)"
+            )
+        formats.append(f)
+
+    # Data will be stored in columns
+    data_columns = []
+    for i in range(len(formats)):
+        data_columns.append([])
+
+    # Read in the CSV file line-by-line
+    with open(csv_filename, "r") as csv_file:
+        i = 0
+        for line in csv_file:
+            spl = line.split(",")
+
+            # Check split size
+            if len(spl) != len(formats):
+                raise ValueError(
+                    "Error on line %d: line split length does not match format length\nLine: %s\nFormat: %s"
+                    % (i, line.strip(), line_values_format)
+                )
+
+            # Save into the data columns
+            for j in range(len(spl)):
+                if formats[j] == "int":
+                    data_columns[j].append(parse_int(spl[j]))
+                elif formats[j] == "idx_int":
+                    int_val = int(spl[j])
+                    if int_val != i:
+                        raise ValueError("Index integer constraint violated on line %d" % i)
+                    data_columns[j].append(int_val)
+                elif formats[j] == "pos_int":
+                    data_columns[j].append(parse_positive_int(spl[j]))
+                elif formats[j] == "float":
+                    data_columns[j].append(parse_float(spl[j]))
+                elif formats[j] == "pos_float":
+                    data_columns[j].append(parse_positive_float(spl[j]))
+                else:
+                    data_columns[j].append(spl[j].strip())
+
+            i += 1
+
+    return data_columns
