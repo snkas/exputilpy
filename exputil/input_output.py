@@ -132,13 +132,16 @@ def parse_positive_int_less_than(str_value, less_than_int_value):
         return res
 
 
-def read_csv_direct_in_columns(csv_filename, line_values_format):
+def read_csv_direct_in_columns(csv_filename, line_values_format, row_filter_keep_function=None):
     """
     Directly read in the entire CSV file.
 
-    :param csv_filename:           CSV filename
-    :param line_values_format:     Line format as such: "[int,idx_int,pos_int,float,pos_float,string]+",
-                                   e.g., "idx_int,pos_int,float,string,int,pos_float"
+    :param csv_filename:               CSV filename
+    :param line_values_format:         Line format as such: "[int,idx_int,pos_int,float,pos_float,string]+",
+                                       e.g., "idx_int,pos_int,float,string,int,pos_float"
+    :param row_filter_keep_function    function(row) -> True/False
+                                       For each parsed row (provided as an array), it must return True or False.
+                                       True iff to keep and add row split into the columns, else False to not add.
 
     :return: Array of data column arrays (e.g., [ array[idx_int], array[pos_int], array[float],
              array[string], array[int], array[pos_float] ]
@@ -173,22 +176,28 @@ def read_csv_direct_in_columns(csv_filename, line_values_format):
                 )
 
             # Save into the data columns
+            row = []
             for j in range(len(spl)):
                 if formats[j] == "int":
-                    data_columns[j].append(parse_int(spl[j]))
+                    row.append(parse_int(spl[j]))
                 elif formats[j] == "idx_int":
                     int_val = int(spl[j])
                     if int_val != i:
                         raise ValueError("Index integer constraint violated on line %d" % i)
-                    data_columns[j].append(int_val)
+                    row.append(int_val)
                 elif formats[j] == "pos_int":
-                    data_columns[j].append(parse_positive_int(spl[j]))
+                    row.append(parse_positive_int(spl[j]))
                 elif formats[j] == "float":
-                    data_columns[j].append(parse_float(spl[j]))
+                    row.append(parse_float(spl[j]))
                 elif formats[j] == "pos_float":
-                    data_columns[j].append(parse_positive_float(spl[j]))
+                    row.append(parse_positive_float(spl[j]))
                 else:
-                    data_columns[j].append(spl[j].strip())
+                    row.append(spl[j].strip())
+
+            # Only add to columns if the filter function allows it
+            if row_filter_keep_function is None or row_filter_keep_function(row):
+                for j in range(len(spl)):
+                    data_columns[j].append(row[j])
 
             i += 1
 

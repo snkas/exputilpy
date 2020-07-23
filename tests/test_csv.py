@@ -30,6 +30,34 @@ class TestCsv(unittest.TestCase):
         self.assertEqual(data_columns[3], [-9.3, 30.24])
         local_shell.remove_force_recursive("temp")
 
+    def test_csv_normal_filter(self):
+        local_shell = LocalShell()
+        local_shell.make_full_dir("temp")
+        local_shell.write_file("temp/test.csv", "a,b,10,-9.3\nabc,def,-100000,30.24\nc,ghi,-1440000, -1294898294")
+        data_columns = read_csv_direct_in_columns(
+            "temp/test.csv",
+            "string,string,int,float",
+            lambda row: row[2] >= -100000
+        )
+        self.assertEqual(data_columns[0], ["a", "abc"])
+        self.assertEqual(data_columns[1], ["b", "def"])
+        self.assertEqual(data_columns[2], [10, -100000])
+        self.assertEqual(data_columns[3], [-9.3, 30.24])
+        local_shell.remove_force_recursive("temp")
+
+    def test_csv_filter_nothing_filtered(self):
+        local_shell = LocalShell()
+        local_shell.make_full_dir("temp")
+        local_shell.write_file("temp/test.csv", "a,10\nb,100\nc,-2")
+        data_columns = read_csv_direct_in_columns(
+            "temp/test.csv",
+            "string,float",
+            lambda row: row[1] >= -2
+        )
+        self.assertEqual(data_columns[0], ["a", "b", "c"])
+        self.assertEqual(data_columns[1], [10, 100, -2])
+        local_shell.remove_force_recursive("temp")
+
     def test_csv_one_line(self):
         local_shell = LocalShell()
         local_shell.make_full_dir("temp")
@@ -75,6 +103,45 @@ class TestCsv(unittest.TestCase):
         # Read it in and compare
         data_columns = read_csv_direct_in_columns("temp/test.csv", "idx_int,int,float,string,pos_int,pos_float")
         self.assertEqual(data_columns, values)
+
+        # Clean up
+        local_shell.remove_force_recursive("temp")
+
+    def test_csv_big_filter(self):
+        local_shell = LocalShell()
+        local_shell.make_full_dir("temp")
+
+        # Write a lot into the CSV file
+        random.seed(123456789)
+        values = [
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
+        passing_idxs = []
+        with open("temp/test.csv", "w+") as f_out:
+            for i in range(100000):
+                values[0].append(i)
+                values[1].append(random.randint(-99999, 999999))
+                values[2].append(random.random() * 10000000.0 - 5000000.0)
+                values[3].append("a" * random.randint(0, 30))
+                values[4].append(random.randint(0, 999999))
+                values[5].append(random.random() * 10000000.0)
+                if values[2][i] >= 0 and len(values[3][i]) <= 5:
+                    passing_idxs.append(i)
+                f_out.write(str(values[0][i]) + "," + str(values[1][i]) + "," + str(values[2][i]) + "," + values[3][i]
+                            + "," + str(values[4][i]) + "," + str(values[5][i]) + "\n")
+
+        # Read it in and compare
+        data_columns = read_csv_direct_in_columns(
+            "temp/test.csv",
+            "idx_int,int,float,string,pos_int,pos_float",
+            row_filter_keep_function=lambda row: row[2] >= 0 and len(row[3]) <= 5
+        )
+        self.assertEqual(data_columns[0], passing_idxs)
 
         # Clean up
         local_shell.remove_force_recursive("temp")
