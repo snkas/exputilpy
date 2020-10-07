@@ -30,6 +30,8 @@ class TestFileDir(unittest.TestCase):
         local_shell.write_file("temp/test.txt", "Test")
         self.assertTrue(local_shell.file_exists("temp/test.txt"))
         self.assertEqual("Test", local_shell.read_file("temp/test.txt").strip())
+        local_shell.sed_replace_in_file_plain("temp/test.txt", "Tes", "ABc")
+        self.assertEqual("ABct", local_shell.read_file("temp/test.txt").strip())
         with open("temp/test.txt", "w+") as f:
             writer = InstantWriter(f)
             writer.write("Ano/.ther testno/.ther")
@@ -47,6 +49,16 @@ class TestFileDir(unittest.TestCase):
             self.assertTrue(False)
         except FailedCommandError:
             self.assertTrue(True)
+        local_shell.remove_recursive("temp")
+
+    def test_sed_replace(self):
+        local_shell = LocalShell()
+        local_shell.remove_force("temp")
+        local_shell.make_full_dir("temp")
+        local_shell.write_file("temp/testA.txt", "This is a blue world blue world")
+        local_shell.sed_replace_in_file_plain("temp/testA.txt", "blue world", "green planet")
+        self.assertEqual("This is a green planet green planet", local_shell.read_file("temp/testA.txt").strip())
+        local_shell.remove("temp/testA.txt")
         local_shell.remove_recursive("temp")
 
     def test_dir(self):

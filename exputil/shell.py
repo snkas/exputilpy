@@ -252,12 +252,12 @@ class Shell(ABC):
         return self.perfect_exec("scp %s %s" % (source_file, target_path))
 
     def sed_replace_in_file_plain(self, target_file, search_term, replace_term):
-        return self.perfect_exec("sed -i "
+        return self.perfect_exec("sed -i'.original' "
                                  "'s/"
                                  + re.escape(search_term).replace("/", "\\/")
                                  + "/"
                                  + replace_term.replace("\\", "\\\\").replace("/", "\\/").replace("&", "\\&")
-                                 + "/g' " + target_file)
+                                 + "/g' " + target_file + "; rm " + target_file + ".original")
 
     def path_exists(self, path):
         res = self.valid_exec("if [ -d \"%s\" ]; then exit 0; else exit 1; fi" % path.replace('"', '\\"'))
