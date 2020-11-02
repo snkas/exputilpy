@@ -1,6 +1,6 @@
 # Experiment utilities
 
-[![Build Status](https://travis-ci.org/snkas/exputilpy.svg?branch=master)](https://travis-ci.org/snkas/exputilpy) [![codecov](https://codecov.io/gh/snkas/exputilpy/branch/master/graph/badge.svg)](https://codecov.io/gh/snkas/exputilpy)
+[![Build Status](https://travis-ci.com/snkas/exputilpy.svg?branch=master)](https://travis-ci.com/snkas/exputilpy) [![codecov](https://codecov.io/gh/snkas/exputilpy/branch/master/graph/badge.svg)](https://codecov.io/gh/snkas/exputilpy)
 
 A Python wrapper for utilities to automate running experiments, in particular with relation to bash. For example, to copy over files, run commands, check activity, etc.. Please note that it is written with a Linux bash in mind, so some functionality might not work on e.g., MacOS.
 
