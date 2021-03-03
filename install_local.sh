@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mkdir temp
-tar --exclude "temp" -zcf temp/python-exputil.tar.gz ./
-pip3 install temp/python-exputil.tar.gz
-rm -r temp
+rm -rf temp || exit 1
+mkdir temp || exit 1
+tar --exclude "temp" -zcf temp/python-exputil.tar.gz ./ || exit 1
+pip3 install temp/python-exputil.tar.gz || exit 1
+rm -r temp || exit 1

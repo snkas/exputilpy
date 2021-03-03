@@ -14,5 +14,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-coverage run --omit="tests/*" -m unittest discover -v -s tests
-coverage html
+coverage run --omit="tests/*" -m unittest discover -v -s tests || exit 1
+coverage html || exit 1
