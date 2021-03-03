@@ -27,7 +27,6 @@ jobs:
 
       - name: Install Python module dependencies
         run: |
-          pip3 install numpy
           pip3 install pytest
           pip3 install coverage
 

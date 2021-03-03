@@ -4,15 +4,14 @@
 
 A Python wrapper for utilities to automate running experiments, in particular with relation to bash. For example, to copy over files, run commands, check activity, etc.. Please note that it is written with a Linux bash in mind, so some functionality might not work on e.g., MacOS.
 
-**Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. (see also the Apache 2.0 License in ./LICENSE).**
+**THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. (see also the MIT License in ./LICENSE).**
 
 ## Installation
 
 **Requirements**
 * Python 3.7+
-* numpy (`pip3 install numpy`)
 * (optional) pytest (`pip3 install pytest`)
 * (optional) coverage (`pip3 install coverage`)
 
