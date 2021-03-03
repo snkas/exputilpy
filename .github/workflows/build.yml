@@ -1,0 +1,46 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8]
+
+    steps:
+
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip
+
+      - name: Install Python module dependencies
+        run: |
+          pip3 install numpy
+          pip3 install coverage
+
+      - name: Install
+        run: |
+          bash install_local.sh
+
+      - name: Run tests
+        run: |
+          python3 -m pytest
+          pytest
+          coverage run --omit="tests/*" -m unittest discover -v -s tests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          files: ./.coverage

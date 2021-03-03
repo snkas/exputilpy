@@ -16,5 +16,5 @@
 
 mkdir temp
 tar --exclude "temp" -zcf temp/python-exputil.tar.gz ./
-pip install temp/python-exputil.tar.gz
+pip3 install temp/python-exputil.tar.gz
 rm -r temp

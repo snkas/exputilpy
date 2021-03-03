@@ -1,6 +1,6 @@
 # Experiment utilities
 
-[![Build Status](https://travis-ci.com/snkas/exputilpy.svg?branch=master)](https://travis-ci.com/snkas/exputilpy) [![codecov](https://codecov.io/gh/snkas/exputilpy/branch/master/graph/badge.svg)](https://codecov.io/gh/snkas/exputilpy)
+[![build](https://github.com/snkas/exputilpy/workflows/build/badge.svg)](https://github.com/snkas/exputilpy/actions?query=workflow%3Abuild+branch%3Amaster) [![codecov](https://codecov.io/gh/snkas/exputilpy/branch/master/graph/badge.svg)](https://codecov.io/gh/snkas/exputilpy)
 
 A Python wrapper for utilities to automate running experiments, in particular with relation to bash. For example, to copy over files, run commands, check activity, etc.. Please note that it is written with a Linux bash in mind, so some functionality might not work on e.g., MacOS.
 
@@ -16,7 +16,7 @@ A Python wrapper for utilities to automate running experiments, in particular wi
 **Option 1**
 
 ```bash
-$ pip install git+https://github.com/snkas/exputilpy.git
+$ pip3 install git+https://github.com/snkas/exputilpy.git
 ```
 
 You can now include it using: `import exputil`
@@ -49,10 +49,10 @@ print("There are %d screens active on the remote." % remote_shell.count_screens(
 
 Run all tests (local version):
 ```bash
-$ python -m pytest
+$ python3 -m pytest
 ```
 
-Run all tests (global pip-installed version):
+Run all tests (global pip3-installed version):
 ```bash
 $ pytest
 ```

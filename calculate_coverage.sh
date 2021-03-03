@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pip install coverage
+pip3 install coverage
 coverage run --omit="tests/*" -m unittest discover -v -s tests
 coverage html
 rm .coverage
