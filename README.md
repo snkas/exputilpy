@@ -12,6 +12,9 @@ A Python wrapper for utilities to automate running experiments, in particular wi
 
 **Requirements**
 * Python 3.7+
+* numpy (`pip3 install numpy`)
+* (optional) pytest (`pip3 install pytest`)
+* (optional) coverage (`pip3 install coverage`)
 
 **Option 1**
 
