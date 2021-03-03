@@ -29,8 +29,11 @@ class TestProperties(unittest.TestCase):
     def test_positive(self):
         local_shell = LocalShell()
         local_shell.make_full_dir("temp")
-        local_shell.write_file("temp/test.txt", "a=5\nb=9.8\nc=abc\nr=-4\nabc = -999.2\nfff =  \"r\"\ngg= \"\n"
-                                                "xy =\"\"\nmm=0.0\nnn=1.0\nuu=0.99999")
+        local_shell.write_file(
+            "temp/test.txt",
+            "a=5\nb=9.8\nc=abc\nr=-4\nabc = -999.2\nfff =  \"r\"\ngg= \"\n"
+            "xy =\"\"\nmm=0.0\nnn=1.0\nuu=0.99999"
+        )
         config = PropertiesConfig("temp/test.txt")
         self.assertEqual(config.get_property_or_fail("a"), "5")
         self.assertEqual(parse_positive_int(config.get_property_or_fail("a")), 5)
