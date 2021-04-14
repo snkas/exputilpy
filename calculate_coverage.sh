@@ -24,3 +24,4 @@
 
 coverage run --omit="tests/*" -m unittest discover -v -s tests || exit 1
 coverage html || exit 1
+coverage xml || exit 1

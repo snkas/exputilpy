@@ -59,7 +59,7 @@ Run all tests (global pip3-installed version):
 $ pytest
 ```
 
-Calculate coverage locally (output in `htmlcov/`):
+Calculate coverage locally (outputs `.coverage`, `coverage.xml` and `htmlcov/`):
 ```bash
 $ bash calculate_coverage.sh
 ```

@@ -1,8 +1,10 @@
-*.iml
 .idea/
+.pytest_cache/
+htmlcov/
 dist/
+temp/
 *.egg-info
 *.pyc
-temp/
+*.iml
 .coverage
-htmlcov/
+coverage.xml
