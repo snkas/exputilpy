@@ -26,11 +26,19 @@ from distutils.core import setup
 
 setup(
     name='exputil',
-    version='1.7',
-    description="Experiment utilities",
-    license="MIT",
+    version='1.8.0',
+    description='Experiment utilities',
+    license='MIT',
     python_requires='>=3.7',
-    author="snkas",
-    url="https://github.com/snkas/exputilpy",
-    packages=['exputil']
+    author='snkas',
+    author_email='snkasdev+exputilpy@gmail.com',
+    url='https://github.com/snkas/exputilpy',
+    packages=['exputil'],
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Programming Language :: Python :: 3 :: Only',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent'
+    ]
 )

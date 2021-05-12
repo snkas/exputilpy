@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
 
@@ -25,20 +25,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install python3-pip
 
-      - name: Install Python module dependencies
+      - name: Install Python module development requirements
         run: |
-          pip3 install pytest
-          pip3 install coverage
+          python3 -m pip install pytest coverage
 
       - name: Install
         run: |
-          bash install_local.sh
+          python3 -m pip install .
 
       - name: Run tests
         run: |
           python3 -m pytest
-          pytest
-          bash calculate_coverage.sh
+
+      - name: Calculate coverage
+        run: |
+          python3 -m coverage run --branch --include="exputil/*" -m pytest
+          python3 -m coverage xml
+          python3 -m coverage html
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
