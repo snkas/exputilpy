@@ -103,6 +103,20 @@ class TestFileDir(unittest.TestCase):
         self.assertFalse(local_shell.file_exists("temp2/b.txt"))
         local_shell.copy_file("temp/a.txt", "temp2")
         self.assertTrue(local_shell.file_exists("temp/a.txt"))
+        self.assertTrue(local_shell.file_exists("temp2/a.txt"))
+        local_shell.remove_recursive("temp2")
+        local_shell.remove_recursive("temp")
+
+    def test_rsync_without_exclude(self):
+        local_shell = LocalShell()
+        local_shell.make_full_dir("temp")
+        local_shell.write_file("temp/test.txt", "Test1")
+        local_shell.write_file("temp/a.txt", "Test2")
+        local_shell.write_file("temp/b.txt", "Test3")
+        local_shell.rsync("temp/", "temp2/", delete=True)
+        self.assertTrue(local_shell.file_exists("temp2/test.txt"))
+        self.assertTrue(local_shell.file_exists("temp2/a.txt"))
+        self.assertTrue(local_shell.file_exists("temp2/b.txt"))
         local_shell.remove_recursive("temp2")
         local_shell.remove_recursive("temp")
 
