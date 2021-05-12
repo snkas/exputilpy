@@ -26,7 +26,7 @@ from distutils.core import setup
 
 setup(
     name='exputil',
-    version='1.8.0',
+    version='1.8.1',
     description='Experiment utilities',
     license='MIT',
     python_requires='>=3.7',
