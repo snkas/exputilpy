@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
+
 
 class InstantWriter:
 
@@ -210,3 +212,40 @@ def read_csv_direct_in_columns(csv_filename, line_values_format, row_filter_keep
             i += 1
 
     return data_columns
+
+
+def plain_replace_in_file_in_place(target_filename: str, search_text: str, replace_text: str):
+    """
+    Within the target file, replace a plain search text with a plain replacement text in-place.
+
+    The in-place replacement is accomplished as follows:
+    (1) First writing the output to a temporary file (named [target_filename].temp)
+    (2) Removing the target file
+    (3) Renaming the temporary file to the target filename
+
+    THE REPLACEMENT IS IN-PLACE, WHICH MEANS THE TARGET FILE WILL BE OVERWRITTEN.
+    THE TEMPORARY FILE (NAMED [target_filename].temp) WILL BE NEWLY CREATED,
+    OVERWRITTEN (IF IT ALREADY EXISTS) AND REMOVED AFTERWARDS.
+
+    :param target_filename:     Target filename
+    :param search_text:         Search plaintext
+    :param replace_text:        Replacement plaintext
+    """
+
+    # Input parameter checking
+    if not isinstance(target_filename, str):
+        raise ValueError("Target filename must be a str")
+    if not isinstance(search_text, str):
+        raise ValueError("Search text must be a str")
+    if not isinstance(replace_text, str):
+        raise ValueError("Replace text must be a str")
+    if search_text == "":
+        raise ValueError("Search text cannot be empty")
+
+    # Perform in-place replacement
+    temp_filename = target_filename + ".temp"
+    with open(target_filename, "rt") as f_in:
+        with open(temp_filename, "wt+") as f_out:
+            f_out.write(f_in.read().replace(search_text, replace_text))
+    os.remove(target_filename)
+    os.rename(temp_filename, target_filename)

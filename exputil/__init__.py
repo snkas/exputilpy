@@ -20,7 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from .shell import RemoteShell, LocalShell, FailedCommandError, InvalidCommandError, OutputRedirect
-from .input_output import InstantWriter, PropertiesConfig, parse_int, parse_float, \
-    parse_positive_int, parse_positive_float, parse_float_between_0_and_1, parse_positive_int_less_than, \
-    read_csv_direct_in_columns
+from .shell import (
+    LocalShell,
+    RemoteShell,
+    OutputRedirect,
+    FailedCommandError,
+    InvalidCommandError
+)
+
+from .input_output import (
+    InstantWriter,
+    PropertiesConfig,
+    parse_int,
+    parse_float,
+    parse_positive_int,
+    parse_positive_float,
+    parse_float_between_0_and_1,
+    parse_positive_int_less_than,
+    read_csv_direct_in_columns,
+    plain_replace_in_file_in_place
+)

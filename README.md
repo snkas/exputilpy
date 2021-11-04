@@ -19,7 +19,7 @@ Please note that it is written with a Linux bash in mind, so some functionality 
 **Python version: 3.7+**
 
 ```bash
-python3 -m pip install git+https://github.com/snkas/exputilpy.git@v1.8.1
+python3 -m pip install git+https://github.com/snkas/exputilpy.git@v1.8.2
 ```
 
 
